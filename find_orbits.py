@@ -584,7 +584,6 @@ def stage3(model="restricted_3body", stage_number=3):
         if model == "bicircular_r4bp":
             min_moon_dist_id = np.argmin(moon_distances)
             log_out.write(f"min_moon_dist_id = {min_moon_dist_id}\n")
-            # min_moon_dist_dvy = (min_moon_dist_id - n_trajectories) * dvy * mps_in_au_per_t_unit * 1.0E9
         if model == "bicircular_r4bp":
             min_good_moon_distance = 200000 / km_in_au
             if russian:
@@ -625,9 +624,6 @@ def stage3(model="restricted_3body", stage_number=3):
                     bad_earth_distances.append(earth_distances[jj])
                     bad_vys.append((jj - n_trajectories) * dvy)
             all_good_earth_distances = np.array(all_good_earth_distances)
-            # all_good_vys = np.array(all_good_vys)
-            # plt.plot(all_good_vys * mps_in_au_per_t_unit * 1.0E9, all_good_earth_distances * km_in_au, color="red",
-            #          linewidth=1.0)
             min_earth_dist_id = all_good_ids[np.argmin(all_good_earth_distances)]
             log_out.write(f"min_earth_dist_id = {min_earth_dist_id}\n")
             max_earth_dist_id = all_good_ids[np.argmax(all_good_earth_distances)]
@@ -637,8 +633,6 @@ def stage3(model="restricted_3body", stage_number=3):
             min_earth_dist_dvy = (min_earth_dist_id - n_trajectories) * dvy * mps_in_au_per_t_unit * 1.0E9
             max_earth_dist_dvy = (max_earth_dist_id - n_trajectories) * dvy * mps_in_au_per_t_unit * 1.0E9
             interesting1_dvy = (interesting1_id - n_trajectories) * dvy * mps_in_au_per_t_unit * 1.0E9
-            # plt.plot(np.array(good_vys) * mps_in_au_per_t_unit * 1.0E9, np.array(good_earth_distances) * km_in_au,
-            #          color="red", linewidth=1.0)
             plt.plot([((_ - n_trajectories) * dvy) * mps_in_au_per_t_unit * 1.0E9 for _ in range(n_trajectories)],
                      moon_distances * km_in_au, color="blue", linewidth=0.4)
             plt.plot([-3.0, 0.0], [min_good_moon_distance * km_in_au, min_good_moon_distance * km_in_au], color="gray",
