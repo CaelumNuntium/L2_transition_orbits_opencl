@@ -1,0 +1,12 @@
+double legendre_polynomial_value(int n, double x);
+double shifted_legendre_polynomial_value(int n, double x);
+double legendre_polynomial_derivative_value(int n, double x);
+double shifted_legendre_polynomial_derivative_value(int n, double x);
+double shifted_legendre_polynomial_antiderivative_value(int n, double x);
+double legendre_polynomial_antiderivative_value(int n, double x);
+void polynom_division(double* p, int n, double* q, int m, double* res, double* r);
+double bernoulli(double* p, int n, double eps, int* ier);
+void polynom_antiderivative(int n, double* p, double* res);
+void shifted_legendre_coeff(int n, double* coeff);
+int lobatto_approach(int n, double* coeff);
+int lobatto(int n, double* coeff);
