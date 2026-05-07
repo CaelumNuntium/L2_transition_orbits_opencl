@@ -70,27 +70,6 @@ class CartesianCoordinateArray(CoordinateArray):
         dict_coords = {"x": 0, "y": 1, "z": 2, "vx": 3, "vy": 4, "vz": 5}
         return self.data[:, :, dict_coords[coord]]
 
-    def plot_orbit(self, body_id, axes, unit_name, unit_value, t_max=None, show=True, to_file=False, filename=None):
-        x_arr = self.get_body(body_id).get_coordinate_array(axes[0])[:, 0]
-        y_arr = self.get_body(body_id).get_coordinate_array(axes[1])[:, 0]
-        x_arr = x_arr / unit_value
-        y_arr = y_arr / unit_value
-        if t_max is not None:
-            x_arr = x_arr[0:floor(t_max / self.delta_t)]
-            y_arr = y_arr[0:floor(t_max / self.delta_t)]
-        plt.xlabel(f"{axes[0]}, {unit_name}")
-        plt.ylabel(f"{axes[1]}, {unit_name}")
-        plt.plot(x_arr, y_arr)
-        earth = {"x": (1.0 - mu2) / unit_value, "y": 0.0, "z": 0.0}
-        plt.scatter([earth[axes[0]]], [earth[axes[1]]], s=10, c="red")
-        if to_file:
-            fig = plt.gcf()
-            fig.savefig(filename, dpi=250)
-        if show:
-            plt.show()
-        else:
-            plt.cla()
-
 
 class UnitName(object):
     def __init__(self, name, russian_name):
