@@ -723,15 +723,6 @@ def stage3(model="restricted_3body", stage_number=3):
         interesting1_y_arr = np.append(interesting1_y_arr, interesting1_y_arr1)
         interesting1_vx_arr = np.append(interesting1_vx_arr, interesting1_vx_arr1)
         interesting1_vy_arr = np.append(interesting1_vy_arr, interesting1_vy_arr1)
-        # if model == "bicircular_r4bp":
-        #     min_moon_dist_x_arr = coord_arr.get_body(min_moon_dist_id).get_coordinate_array("x")[0:t_limit, 0]
-        #     min_moon_dist_y_arr = coord_arr.get_body(min_moon_dist_id).get_coordinate_array("y")[0:t_limit, 0]
-        #     min_moon_dist_x_arr1 = coord_arr1.get_body(min_moon_dist_id
-        #                                                ).get_coordinate_array("x")[0:int(ref_times[min_moon_dist_id]), 0]
-        #     min_moon_dist_y_arr1 = coord_arr1.get_body(min_moon_dist_id
-        #                                                ).get_coordinate_array("y")[0:int(ref_times[min_moon_dist_id]), 0]
-        #     min_moon_dist_x_arr = np.append(min_moon_dist_x_arr, min_moon_dist_x_arr1)
-        #     min_moon_dist_y_arr = np.append(min_moon_dist_y_arr, min_moon_dist_y_arr1)
         plt.gca().set_aspect('equal', adjustable='box')
         if russian:
             plt.xlabel("$x$, $10^6$ км")
@@ -751,10 +742,6 @@ def stage3(model="restricted_3body", stage_number=3):
             moon_coord_array = moon_coords(np.array([0.001 * _ * moon_period for _ in range(1001)]))
             plt.plot((moon_coord_array[0] - x_earth) * km_in_au * 1.0E-6, moon_coord_array[1] * km_in_au * 1.0E-6,
                      color="black", linewidth=0.2)
-            # plt.plot((min_moon_dist_x_arr - x_earth) * km_in_au * 1.0E-6, min_moon_dist_y_arr * km_in_au * 1.0E-6,
-            #          color="gray", linewidth=0.95)
-            # plt.scatter([(moon_positions[min_moon_dist_id][0] - x_earth) * km_in_au * 1.0E-6],
-            #             [moon_positions[min_moon_dist_id][1] * km_in_au * 1.0E-6], s=3, color="black")
         fig = plt.gcf()
         fig.savefig(f"{img_dir}/{stage_dir}/all_trajectories.png", dpi=600)
         plt.cla()
@@ -834,8 +821,6 @@ class Map2D(object):
             ax.set_xlabel(f"$\\Delta v_x$, {self.xy_unit}")
             ax.set_ylabel(f"$\\Delta v_y$, {self.xy_unit}")
         ax.axis([np.min(x_axis), np.max(x_axis), np.min(y_axis), np.max(y_axis)])
-        # ax.scatter([(self.x_center - ref_point[0]) * km_in_au], [(self.y_center - ref_point[1]) * km_in_au],
-        #            color="yellow", s=1)
         if draw_circle:
             r_circle_sq = center_x * center_x + center_y * center_y
             print(f"Plot circular orbit: R = {sqrt(r_circle_sq)} km")
@@ -1034,7 +1019,6 @@ def stage5(model="restricted_3body", stage_number=5):
         t_step = t_unit_1 / m1
         t_unit_1 = t_step * m1
         min_earth_dist_t0 = -t_limit * t_unit_1 - min_earth_dist_ref_t0 * t_unit_2
-        # n_steps = ceil(-min_earth_dist_t0 / t_step) * 3
         n_steps = ceil(6.5E7 / s_in_time_unit / t_step)
         min_earth_dist_ref_x = min_earth_dist_x_arr1[min_earth_dist_ref_t0]
         min_earth_dist_ref_y = min_earth_dist_y_arr1[min_earth_dist_ref_t0]
