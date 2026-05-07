@@ -39,7 +39,10 @@ cl_device_id select_device(const char* config)
 		fprintf(stderr, "Warning: Cannot find platform name and device name in the configuration file. Please, select manually.\n");
 	}
 	clGetPlatformIDs(0, NULL, &num_platforms); // Check out how many platforms are there
-	printf("Platforms and devices:\n");
+	if (manual_select)
+	{
+		printf("Platforms and devices:\n");
+	}
 	platforms = (cl_platform_id*)malloc(num_platforms * sizeof(cl_platform_id));
 	devices = (cl_device_id**)malloc(num_platforms * sizeof(cl_device_id*));
 	num_devices = (cl_uint*)malloc(num_platforms * sizeof(cl_uint));

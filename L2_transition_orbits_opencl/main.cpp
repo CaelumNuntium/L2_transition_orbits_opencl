@@ -16,6 +16,9 @@
 #include "compile.h"
 #include "io.h"
 
+#define INTEGRATORS_KERNEL_DIRECTORY "L2_transition_orbits_opencl/integrators"
+#define EQUATIONS_KERNEL_DIRECTORY "L2_transition_orbits_opencl/equations"
+
 #define MAX_SOURCE_SIZE 1048576
 #define MAX_COMPILER_OUTPUT_SIZE 1048576
 #define CONFIG_NAME "set.config"
@@ -119,8 +122,8 @@ int main(int argc, char* argv[])
 	sprintf(cl_name, "%s.cl", values[4]);
 	sprintf(eq_name, "%s.cl", values[8]);
 	sscanf(values[9], "%lf", &t_init);
-	sprintf(long_cl_name, "../../OpenCL_Integrator/integrators/%s.cl", values[4]);
-	sprintf(long_eq_name, "../../OpenCL_Integrator/equations/%s.cl", values[8]);
+	sprintf(long_cl_name, "%s/%s.cl", INTEGRATORS_KERNEL_DIRECTORY, values[4]);
+	sprintf(long_eq_name, "%s/%s.cl", EQUATIONS_KERNEL_DIRECTORY, values[8]);
 	if (!strcmp(values[5], "binary"))
 	{
 		binary = 1;
@@ -177,7 +180,7 @@ int main(int argc, char* argv[])
 	printf("\n%d threads\n", n_threads);
 	printf("num_steps = %d\nstep = %lf\nM_steps = %d\nN = %d\n", n, h, m, n0_bodies);
 	printf("nt = %d\n\n", nt);
-	printf("Kernel source: %s\n\n", cl_name);
+	printf("Kernel sources: %s, %s\n\n", cl_name, eq_name);
 	workrange_size[0] = n_threads;
 	workgroup_size[0] = 64;
 
@@ -374,6 +377,7 @@ int main(int argc, char* argv[])
 
 	t9 = clock();
 	// printf("Creating kernel and setting arguments: %d ms\n\n", t9 - t8);
+	printf("Kernel started\n\n");
 
 	ier = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, workrange_size, workgroup_size, 0, NULL, NULL); // Create NDRange
 	report_error(ier, "clEnqueueNDRangeKernel", 12);
