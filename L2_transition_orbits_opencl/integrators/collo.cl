@@ -20,12 +20,6 @@ void parallel_calculate_difference(double*, double*, double*, double*, int);
 void make_y_matrix(double*, double*, double*, double*, double*, int);
 void make_f_matrix(double*, double*, double, double, double*, double*, int);
 
-/*
-void print_value_in_one_thread(double);
-void print_vector_in_one_thread(int, double*);
-void print_matrix_in_one_thread(int, int, double*);
-*/
-
 __kernel void integrator(__global const double* t0, __global const double* h, __global const int* n, __global const int* m, __global const double* x0, __global double* xres, __global const double* c_global, __global const double* matrix_ct_inv_transpose_global, __global const double* b_transpose_global)
 {
     const int local_matrix_id = get_local_id(0) % S;
@@ -257,46 +251,3 @@ void make_f_matrix(double* y, double* c, double hh, double t0, double* f, double
     }
     barrier(CLK_LOCAL_MEM_FENCE);
 }
-
-/*
-void print_value_in_one_thread(double value)
-{
-    if(get_global_id(0) == 0)
-    {
-        printf("%lf\n\n", value);
-    }
-    barrier(CLK_LOCAL_MEM_FENCE);
-}
-
-void print_vector_in_one_thread(int len, double* vector)
-{
-    int i;
-    if(get_global_id(0) == 0)
-    {
-        for(i = 0; i < len; ++i)
-        {
-            printf("%lf ", vector[i]);
-        }
-        printf("\n\n");
-    }
-    barrier(CLK_LOCAL_MEM_FENCE);
-}
-
-void print_matrix_in_one_thread(int n, int m, double* matrix)
-{
-    int i, j;
-    if(get_global_id(0) == 0)
-    {
-        for(i = 0; i < n; ++i)
-        {
-            for(j = 0; j < m; ++j)
-            {
-                printf("%lf ", matrix[i * m + j]);
-            }
-            printf("\n");
-        }
-        printf("\n");
-    }
-    barrier(CLK_LOCAL_MEM_FENCE);
-}
-*/
