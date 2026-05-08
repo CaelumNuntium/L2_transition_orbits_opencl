@@ -11,7 +11,6 @@
 # Note: This is only used by command line
 ###############################################################################
 #*.cs     diff=csharp
-*.cl linguist-language=OpenCL
 
 ###############################################################################
 # Set the merge driver for project and solution files
@@ -62,3 +61,8 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+
+*.cl linguist-detectable
+*.cl linguist-language=С
+
