@@ -103,23 +103,27 @@ def plot_jacobi_constant(t_arr, x_arr, y_arr, z_arr, vx_arr, vy_arr, vz_arr, fil
         c_j_0 = c_j_arr[0]
         print(f"C_J(0) = {c_j_0}")
         if absolute_value:
-            plt.ylabel("$\\Delta C_J$")
+            plt.ylabel("$\\Delta C_J$, $10^{-5}$")
             delim = 1.0
+            mult = 100000.0
         else:
-            plt.ylabel("$\\Delta C_J / C_J(0)$")
+            plt.ylabel("$\\Delta C_J / C_J$, $10^{-5}$")
             delim = c_j_0
+            mult = 100000.0
     else:
         c_j_0 = 0.0
         plt.ylabel("$C_J$")
         delim = 1.0
+        mult = 1.0
     u_lim = min([1.0E-4, 1.25 * np.max((c_j_arr - c_j_0) / delim)])
     l_lim = min([max([-1.0E-4, 1.25 * np.min((c_j_arr - c_j_0) / delim)]), -0.1 * u_lim])
     shift = 0.05 * (u_lim - l_lim)
-    plt.ylim([l_lim, u_lim])
-    plt.plot(t_markers, (c_j_arr - c_j_0) / delim, linewidth=0.8, color="green")
+    plt.ylim([l_lim * mult, u_lim * mult])
+    plt.plot(t_markers, (c_j_arr - c_j_0) / delim * mult, linewidth=0.8, color="green")
     if borders is not None:
         for b in borders:
-            plt.plot([b / (2.0 * pi), b / (2.0 * pi)], [u_lim - shift, l_lim + shift], color="red", linewidth=0.4)
+            plt.plot([b / (2.0 * pi), b / (2.0 * pi)], [(u_lim - shift) * mult, (l_lim + shift) * mult], color="red",
+                     linewidth=0.4)
     plt.gca().invert_xaxis()
     f = plt.gcf()
     f.savefig(filename, dpi=450)
