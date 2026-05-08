@@ -64,5 +64,5 @@
 
 
 *.cl linguist-detectable
-*.cl linguist-language=С
+*.cl linguist-language=OpenCL
 
